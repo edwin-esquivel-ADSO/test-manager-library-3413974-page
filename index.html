@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manager Library · Presentación del Proyecto</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Hero Section -->
+  <header class="hero">
+    <div class="container">
+      <div class="badge">Ficha ADSO 3413974 · SDD Challenge</div>
+      <h1>Manager Library</h1>
+      <p class="subtitle">
+        Sistema integral de gestión de préstamos y catálogo bibliotecario desarrollado mediante <strong>Spec-Driven Development (SDD)</strong> en <strong>React</strong> y <strong>PHP (Laravel)</strong>.
+      </p>
+      <div class="cta-group">
+        <a href="#arquitectura" class="btn btn-primary">Arquitectura y ADRs</a>
+        <a href="#caracteristicas" class="btn btn-secondary">Características</a>
+        <a href="#repositorios" class="btn btn-secondary">Repositorios</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Spec Driven Highlights -->
+  <section id="arquitectura" class="section">
+    <div class="container">
+      <h2 class="section-title">Decisiones de Arquitectura (ADR)</h2>
+      <div class="grid cards-grid">
+        <div class="card">
+          <div class="card-icon">🏛️</div>
+          <h3>ADR-001 · Propiedad del Esquema</h3>
+          <p>
+            El contenedor de infraestructura arranca con una base de datos vacía. El 100% del DDL (tablas, restricciones y semilla inicial) reside en las migraciones de Laravel.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>ADR-002 · Concurrencia y Restricciones</h3>
+          <p>
+            Garantía estricta de stock disponible mediante restricción CHECK en el motor (<code>0 &lt;= available_copies &lt;= total_copies</code>). Si dos bibliotecarios solicitan el último ejemplar, el sistema responde con <code>409 BOOK_NOT_AVAILABLE</code>.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛡️</div>
+          <h3>ADR-003 · Baja Lógica</h3>
+          <p>
+            Los libros no sufren borrado físico. Se utiliza <code>deleted_at</code> para preservar la integridad histórica de préstamos pasados. Un libro con préstamos abiertos no puede ser dado de baja.
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-icon">❄️</div>
+          <h3>ADR-004 · Valores Congelados</h3>
+          <p>
+            Las líneas de préstamo congelan el título, ISBN y categoría del momento del préstamo. Los reportes estadísticos permanecen inmutables aunque el catálogo sufra renombrados posteriores.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Business Rules -->
+  <section id="caracteristicas" class="section bg-alt">
+    <div class="container">
+      <h2 class="section-title">Invariantes de Dominio Implementadas</h2>
+      <div class="grid list-grid">
+        <div class="feature-item">
+          <h4>📋 Registro Transaccional</h4>
+          <p>Préstamos de 1 a 3 libros por operación con vigencia automática de 14 días (UTC).</p>
+        </div>
+        <div class="feature-item">
+          <h4>🚫 Límite por Socio</h4>
+          <p>Máximo 3 libros activos por socio. Si intenta solicitar más, la API responde <code>422 MEMBER_LIMIT_EXCEEDED</code>.</p>
+        </div>
+        <div class="feature-item">
+          <h4>⏳ Bloqueo por Vencimiento</h4>
+          <p>Cualquier socio con préstamos vencidos no puede adquirir nuevos préstamos (<code>409 MEMBER_HAS_OVERDUE</code>).</p>
+        </div>
+        <div class="feature-item">
+          <h4>🔄 Estado Calculado Dinámicamente</h4>
+          <p>Los estados <code>open</code>, <code>overdue</code> y <code>closed</code> se calculan en tiempo de ejecución. Cero redundancia en base de datos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Repositories -->
+  <section id="repositorios" class="section">
+    <div class="container">
+      <h2 class="section-title">Ecosistema de Repositorios</h2>
+      <div class="table-box">
+        <table>
+          <thead>
+            <tr>
+              <th>Componente</th>
+              <th>Tecnología</th>
+              <th>Rol en la Solución</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>api</strong></td>
+              <td>PHP (Laravel 11)</td>
+              <td>Núcleo de negocio, migraciones, endpoints REST y autenticación JWT.</td>
+            </tr>
+            <tr>
+              <td><strong>app</strong></td>
+              <td>React + Vite</td>
+              <td>Frontend interactivo para gestión de préstamos, catálogo y reportes.</td>
+            </tr>
+            <tr>
+              <td><strong>infra</strong></td>
+              <td>Docker Compose</td>
+              <td>Orquestación y aprovisionamiento de PostgreSQL 16 vacío.</td>
+            </tr>
+            <tr>
+              <td><strong>tool</strong></td>
+              <td>Node.js / Axios</td>
+              <td>Sembrador de datos demostrativos consumiendo exclusivamente la API HTTP.</td>
+            </tr>
+            <tr>
+              <td><strong>page</strong></td>
+              <td>HTML5 / CSS3</td>
+              <td>Sitio estático de presentación pública del reto.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-content">
+      <p>© 2026 Manager Library · Aprendiz Edwin Esquivel · ADSO Ficha 3413974</p>
+    </div>
+  </footer>
+</body>
+</html>
