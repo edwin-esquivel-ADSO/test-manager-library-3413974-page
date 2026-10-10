@@ -3,126 +3,272 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manager Library · Presentación del Proyecto</title>
+  <title>Manager Library · Presentación Oficial del Proyecto</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <div class="container bar-content">
+      <span>🚀 Proyecto Finalizado · Prueba Técnica Ficha ADSO 3413974 · SDD Challenge</span>
+      <a href="https://github.com/edwin-esquivel-ADSO" target="_blank" class="bar-link">Ver Forks en GitHub →</a>
+    </div>
+  </div>
+
   <!-- Hero Section -->
   <header class="hero">
     <div class="container">
-      <div class="badge">Ficha ADSO 3413974 · SDD Challenge</div>
-      <h1>Manager Library</h1>
-      <p class="subtitle">
-        Sistema integral de gestión de préstamos y catálogo bibliotecario desarrollado mediante <strong>Spec-Driven Development (SDD)</strong> en <strong>React</strong> y <strong>PHP (Laravel)</strong>.
+      <div class="hero-badge">
+        <span class="badge-dot"></span> Spec-Driven Development (SDD)
+      </div>
+      <h1 class="hero-title">Manager Library</h1>
+      <p class="hero-subtitle">
+        Sistema integral de gestión de préstamos, catálogo bibliotecario y control operativo traducido fielmente desde especificaciones en Python y .NET hacia un ecosistema moderno en <strong>PHP (Laravel 11)</strong> y <strong>React 18</strong>.
       </p>
+      
+      <div class="hero-stats">
+        <div class="stat-box">
+          <div class="stat-number">23/23</div>
+          <div class="stat-label">Tareas Cumplidas (T-01 a T-23)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">4 / 4</div>
+          <div class="stat-label">ADRs Implementados</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Pruebas en Verde</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">6</div>
+          <div class="stat-label">Repositorios Sincronizados</div>
+        </div>
+      </div>
+
       <div class="cta-group">
-        <a href="#arquitectura" class="btn btn-primary">Arquitectura y ADRs</a>
-        <a href="#caracteristicas" class="btn btn-secondary">Características</a>
-        <a href="#repositorios" class="btn btn-secondary">Repositorios</a>
+        <a href="#demostracion" class="btn btn-primary">Guía de Demostración</a>
+        <a href="#arquitectura" class="btn btn-secondary">Decisiones de Arquitectura (ADR)</a>
+        <a href="#ecosistema" class="btn btn-secondary">Ecosistema de Repositorios</a>
       </div>
     </div>
   </header>
 
-  <!-- Spec Driven Highlights -->
-  <section id="arquitectura" class="section">
+  <!-- Interactive Project Overview -->
+  <section class="section" id="resumen">
     <div class="container">
-      <h2 class="section-title">Decisiones de Arquitectura (ADR)</h2>
-      <div class="grid cards-grid">
-        <div class="card">
-          <div class="card-icon">🏛️</div>
-          <h3>ADR-001 · Propiedad del Esquema</h3>
-          <p>
-            El contenedor de infraestructura arranca con una base de datos vacía. El 100% del DDL (tablas, restricciones y semilla inicial) reside en las migraciones de Laravel.
-          </p>
+      <div class="section-header">
+        <span class="section-tag">Propósito del Reto</span>
+        <h2 class="section-title">¿Qué es Spec-Driven Development (SDD)?</h2>
+        <p class="section-description">
+          En esta prueba técnica, <strong>el código no era el fin, sino el medio</strong>. El objetivo evaluado fue la capacidad de leer una especificación formal estricta con reglas de negocio innegociables y trasladarla con total exactitud a tecnologías empresariales distintas sin romper ningún contrato.
+        </p>
+      </div>
+
+      <div class="grid comparison-grid">
+        <div class="card spec-card">
+          <div class="card-tag">Especificación Entregada</div>
+          <h3>Especificación Canónica</h3>
+          <ul class="spec-list">
+            <li><strong>Modelos de referencia:</strong> Python (FastAPI) y .NET (C#)</li>
+            <li><strong>Reglas de negocio:</strong> 10 Historias de Usuario con Criterios de Aceptación (CA)</li>
+            <li><strong>Contrato HTTP:</strong> Rutas <code>/api/v1/</code>, códigos y cuerpo único de error</li>
+            <li><strong>Invariantes:</strong> 4 Registros de Decisión de Arquitectura (ADRs)</li>
+          </ul>
         </div>
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <h3>ADR-002 · Concurrencia y Restricciones</h3>
-          <p>
-            Garantía estricta de stock disponible mediante restricción CHECK en el motor (<code>0 &lt;= available_copies &lt;= total_copies</code>). Si dos bibliotecarios solicitan el último ejemplar, el sistema responde con <code>409 BOOK_NOT_AVAILABLE</code>.
-          </p>
-        </div>
-        <div class="card">
-          <div class="card-icon">🛡️</div>
-          <h3>ADR-003 · Baja Lógica</h3>
-          <p>
-            Los libros no sufren borrado físico. Se utiliza <code>deleted_at</code> para preservar la integridad histórica de préstamos pasados. Un libro con préstamos abiertos no puede ser dado de baja.
-          </p>
-        </div>
-        <div class="card">
-          <div class="card-icon">❄️</div>
-          <h3>ADR-004 · Valores Congelados</h3>
-          <p>
-            Las líneas de préstamo congelan el título, ISBN y categoría del momento del préstamo. Los reportes estadísticos permanecen inmutables aunque el catálogo sufra renombrados posteriores.
-          </p>
+
+        <div class="card solution-card">
+          <div class="card-tag badge-accent">Solución Construida</div>
+          <h3>Traducción Realizada</h3>
+          <ul class="spec-list">
+            <li><strong>Backend:</strong> PHP 8.2 con Laravel 11 (Arquitectura Limpia)</li>
+            <li><strong>Frontend:</strong> React 18 con Vite, Tailwind Dark UI & Axios</li>
+            <li><strong>Base de Datos:</strong> PostgreSQL 16 Alpine orquestado con Docker</li>
+            <li><strong>Herramientas:</strong> Sembrador de datos en Node.js vía API HTTP</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Business Rules -->
-  <section id="caracteristicas" class="section bg-alt">
+  <!-- ADR Architecture Deep Dive -->
+  <section class="section bg-alt" id="arquitectura">
     <div class="container">
-      <h2 class="section-title">Invariantes de Dominio Implementadas</h2>
-      <div class="grid list-grid">
-        <div class="feature-item">
-          <h4>📋 Registro Transaccional</h4>
-          <p>Préstamos de 1 a 3 libros por operación con vigencia automática de 14 días (UTC).</p>
+      <div class="section-header">
+        <span class="section-tag">Fundamentos Innegociables</span>
+        <h2 class="section-title">Decisiones de Arquitectura (ADRs)</h2>
+        <p class="section-description">
+          Las cuatro decisiones que blindan la integridad de los datos y la coherencia del sistema.
+        </p>
+      </div>
+
+      <div class="grid adr-grid">
+        <div class="card adr-card">
+          <div class="adr-icon">🏛️</div>
+          <div class="adr-meta">ADR-001</div>
+          <h3>Propiedad del Esquema</h3>
+          <p>
+            El contenedor de infraestructura (<code>infra</code>) arranca con una base de datos <strong>completamente vacía</strong>. Todo el DDL (tablas, restricciones y semillas) pertenece exclusivamente a las migraciones de Laravel, evitando inconsistencias entre entornos.
+          </p>
+          <div class="adr-tag">Verificado: Cero SQL en infra</div>
         </div>
-        <div class="feature-item">
-          <h4>🚫 Límite por Socio</h4>
-          <p>Máximo 3 libros activos por socio. Si intenta solicitar más, la API responde <code>422 MEMBER_LIMIT_EXCEEDED</code>.</p>
+
+        <div class="card adr-card">
+          <div class="adr-icon">⚡</div>
+          <div class="adr-meta">ADR-002</div>
+          <h3>Concurrencia sobre Ejemplares</h3>
+          <p>
+            Si dos bibliotecarios intentan prestar el último ejemplar al mismo tiempo, el motor lo impide mediante la restricción <code>ck_book_available_range</code> (<code>0 &lt;= disponibles &lt;= total</code>). Uno obtiene el préstamo y el otro recibe <code>409 BOOK_NOT_AVAILABLE</code>.
+          </p>
+          <div class="adr-tag">Verificado: Control Atómico</div>
         </div>
-        <div class="feature-item">
-          <h4>⏳ Bloqueo por Vencimiento</h4>
-          <p>Cualquier socio con préstamos vencidos no puede adquirir nuevos préstamos (<code>409 MEMBER_HAS_OVERDUE</code>).</p>
+
+        <div class="card adr-card">
+          <div class="adr-icon">🛡️</div>
+          <div class="adr-meta">ADR-003</div>
+          <h3>Baja Lógica de Libros</h3>
+          <p>
+            Los libros no se borran físicamente para no corromper el historial de préstamos pasados. Se utiliza <code>deleted_at</code>. Además, si un libro tiene préstamos abiertos activos, el sistema impide la baja con <code>409 BOOK_HAS_OPEN_LOANS</code>.
+          </p>
+          <div class="adr-tag">Verificado: deleted_at IS NULL</div>
         </div>
-        <div class="feature-item">
-          <h4>🔄 Estado Calculado Dinámicamente</h4>
-          <p>Los estados <code>open</code>, <code>overdue</code> y <code>closed</code> se calculan en tiempo de ejecución. Cero redundancia en base de datos.</p>
+
+        <div class="card adr-card">
+          <div class="adr-icon">❄️</div>
+          <div class="adr-meta">ADR-004</div>
+          <h3>Valores Congelados en Préstamos</h3>
+          <p>
+            Cada línea de préstamo congela el título, ISBN y categoría del momento exacto del préstamo. La categoría no lleva FK a propósito: si el libro cambia de nombre o categoría en el catálogo vivo, los reportes pasados permanecen inmutables.
+          </p>
+          <div class="adr-tag">Verificado: Inmutabilidad Histórica</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Repositories -->
-  <section id="repositorios" class="section">
+  <!-- Business Rules Implemented -->
+  <section class="section" id="reglas">
     <div class="container">
-      <h2 class="section-title">Ecosistema de Repositorios</h2>
-      <div class="table-box">
-        <table>
+      <div class="section-header">
+        <span class="section-tag">Lógica de Negocio</span>
+        <h2 class="section-title">Invariantes y Reglas Aplicadas</h2>
+        <p class="section-description">
+          Cumplimiento exacto de los requisitos funcionales estipulados en <code>spec.md</code>.
+        </p>
+      </div>
+
+      <div class="grid rules-grid">
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">01</span>
+            <h4>Préstamos Transaccionales (HU-06)</h4>
+          </div>
+          <p>Un préstamo agrupa de 1 a 3 libros por operación con vigencia automática de 14 días. No se permite repetir el mismo libro en la misma solicitud (422).</p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">02</span>
+            <h4>Límite de 3 Libros por Socio</h4>
+          </div>
+          <p>Un socio no puede acumular más de 3 libros sin devolver en total. Si intenta exceder este número, el servidor responde con <code>422 MEMBER_LIMIT_EXCEEDED</code>.</p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">03</span>
+            <h4>Bloqueo por Libros Vencidos</h4>
+          </div>
+          <p>Si un socio tiene al menos un libro en mora (fecha de vencimiento superada sin devolver), el sistema le bloquea nuevos préstamos con <code>409 MEMBER_HAS_OVERDUE</code>.</p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">04</span>
+            <h4>Devolución por Línea (HU-07)</h4>
+          </div>
+          <p>Cada ejemplar se devuelve de forma individual, sumando +1 al stock disponible de inmediato. Intentar devolver una línea ya devuelta responde <code>409 ITEM_ALREADY_RETURNED</code>.</p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">05</span>
+            <h4>Estados Calculados al Vuelo (Art. VII)</h4>
+          </div>
+          <p>Los estados <code>open</code>, <code>overdue</code> y <code>closed</code> se calculan en tiempo de ejecución. No existe columna redundante en base de datos.</p>
+        </div>
+
+        <div class="rule-card">
+          <div class="rule-header">
+            <span class="rule-num">06</span>
+            <h4>Gestión de Bibliotecarios (HU-02)</h4>
+          </div>
+          <p>El administrador puede dar de alta nuevos operadores (con usuario normalizado en minúsculas) y visualizarlos en tiempo real con opción de baja.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The 6 Repositories Ecosystem -->
+  <section class="section bg-alt" id="ecosistema">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Ecosistema Completo</span>
+        <h2 class="section-title">Estructura de los 6 Repositorios</h2>
+        <p class="section-description">
+          Cada componente cumple un rol especializado e independiente, commiteado en GitHub.
+        </p>
+      </div>
+
+      <div class="table-container-public">
+        <table class="public-table">
           <thead>
             <tr>
-              <th>Componente</th>
+              <th>Repositorio</th>
               <th>Tecnología</th>
-              <th>Rol en la Solución</th>
+              <th>Propósito</th>
+              <th>Evidencia / Estado</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>api</strong></td>
-              <td>PHP (Laravel 11)</td>
-              <td>Núcleo de negocio, migraciones, endpoints REST y autenticación JWT.</td>
+              <td><strong><code>docs</code></strong></td>
+              <td>Markdown</td>
+              <td>Especificaciones originales y reporte de traducción SDD senior.</td>
+              <td><span class="status-badge success">Completado</span></td>
             </tr>
             <tr>
-              <td><strong>app</strong></td>
-              <td>React + Vite</td>
-              <td>Frontend interactivo para gestión de préstamos, catálogo y reportes.</td>
+              <td><strong><code>api</code></strong></td>
+              <td>Laravel 11 (PHP 8.2)</td>
+              <td>Lógica de negocio, DDL estricto, JWT de 8h y pruebas automatizadas.</td>
+              <td><span class="status-badge success">Tests 100% Verde</span></td>
             </tr>
             <tr>
-              <td><strong>infra</strong></td>
+              <td><strong><code>app</code></strong></td>
+              <td>React 18 + Vite</td>
+              <td>Panel interactivo con catálogo, edición, socios, préstamos y métricas.</td>
+              <td><span class="status-badge success">Build Verificado</span></td>
+            </tr>
+            <tr>
+              <td><strong><code>infra</code></strong></td>
               <td>Docker Compose</td>
-              <td>Orquestación y aprovisionamiento de PostgreSQL 16 vacío.</td>
+              <td>PostgreSQL 16 Alpine vacío en red aislada y persistencia de volumen.</td>
+              <td><span class="status-badge success">ADR-001 Cumplido</span></td>
             </tr>
             <tr>
-              <td><strong>tool</strong></td>
-              <td>Node.js / Axios</td>
-              <td>Sembrador de datos demostrativos consumiendo exclusivamente la API HTTP.</td>
+              <td><strong><code>tool</code></strong></td>
+              <td>Node.js (Axios)</td>
+              <td>Sembrador que puebla 42 libros y 10 socios consumiendo solo la API REST.</td>
+              <td><span class="status-badge success">T-21 Cumplido</span></td>
             </tr>
             <tr>
-              <td><strong>page</strong></td>
+              <td><strong><code>page</code></strong></td>
               <td>HTML5 / CSS3</td>
-              <td>Sitio estático de presentación pública del reto.</td>
+              <td>Sitio público estático de presentación, responsivo e independiente.</td>
+              <td><span class="status-badge success">En Ejecución</span></td>
             </tr>
           </tbody>
         </table>
@@ -130,10 +276,79 @@
     </div>
   </section>
 
-  <footer>
-    <div class="container footer-content">
-      <p>© 2026 Manager Library · Aprendiz Edwin Esquivel · ADSO Ficha 3413974</p>
+  <!-- Live Demo Walkthrough Guide -->
+  <section class="section" id="demostracion">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Feria de Presentación</span>
+        <h2 class="section-title">Paso a Paso de la Demostración</h2>
+        <p class="section-description">
+          Ruta recomendada para la demostración en vivo ante el grupo evaluador.
+        </p>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h4>Acceso Seguro con Token JWT</h4>
+            <p>Ingreso con credenciales de administrador (<code>admin</code> / <code>Admin123*</code>). El sistema emite un token con 8 horas de vigencia y autoriza las funciones operativas.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h4>Catálogo de Libros y Edición de Ejemplares</h4>
+            <p>Búsqueda en vivo de los 42 libros sembrados. Demostración del botón <strong>Editar</strong> donde cambiar el total de copias recalcula automáticamente las copias disponibles (CA-03.3).</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h4>Registro de Préstamo con Invariantes</h4>
+            <p>Selección de un socio y 2 libros. El préstamo se genera atómicamente por 14 días, congelando título y categoría, descontando disponibilidad en tiempo real.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h4>Devolución por Línea y Cierre del Préstamo</h4>
+            <p>Devolución individual de una copia. El inventario disponible se repone de inmediato y el estado del préstamo pasa automáticamente a <code>closed</code>.</p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h4>Alta de Bibliotecarios y Reporte de Préstamos</h4>
+            <p>Demostración del panel dual de bibliotecarios y consulta de reporte de libros más prestados por rango de fechas respetando los valores congelados (ADR-004).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <h3>Manager Library</h3>
+        <p>Solución desarrollada por <strong>Edwin Esquivel</strong> · Ficha ADSO 3413974</p>
+      </div>
+      <div class="footer-links">
+        <a href="#arquitectura">ADRs</a>
+        <a href="#reglas">Reglas</a>
+        <a href="#ecosistema">Repositorios</a>
+        <a href="#demostracion">Demostración</a>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>© 2026 Manager Library · Desarrollo Guiado por Especificación (SDD) · SENA</p>
     </div>
   </footer>
+
 </body>
 </html>
